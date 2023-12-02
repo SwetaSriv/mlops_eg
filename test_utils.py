@@ -144,3 +144,14 @@ def tune_and_save(
 
 def macro_f1(y_true, y_pred, pos_label=1):
     return f1_score(y_true, y_pred, pos_label=pos_label, average='macro', zero_division='warn')
+
+def preprocess_digits(dataset):
+    n_samples = len(dataset.images)
+    data = dataset.images.reshape((n_samples, -1))
+    label = dataset.target
+
+    # Add unit normalization to each sample
+    scaler = StandardScaler()
+    data_normalized = scaler.fit_transform(data)
+
+    return data_normalized, label
